@@ -21,58 +21,56 @@ function pregunta(texto) {
 
 // Función para crear una tarea
 async function crearTarea() {
-  console.log('\n--- CREAR NUEVA TAREA ---');
+  console.log('\n╔══════════════════════════════════╗');
+  console.log('║      CREAR NUEVA TAREA           ║');
+  console.log('╚══════════════════════════════════╝\n');
   
   const titulo = await pregunta('Ingrese el título de la tarea: ');
   const descripcion = await pregunta('Ingrese la descripción de la tarea: ');
-  
-  let estado = false;
-  let estadoIngresado = await pregunta('¿La tarea está disponible? (si/no): ');
-  
-  if (estadoIngresado.toLowerCase() === 'si' || estadoIngresado.toLowerCase() === 's') {
-    estado = true;
-  }
   
   const tarea = {
     id: idCounter++,
     titulo: titulo,
     descripcion: descripcion,
-    estado: estado
+    completada: false
   };
   
   tareas.push(tarea);
-  console.log(`\n✓ Tarea "${titulo}" creada exitosamente.\n`);
+  console.log(`\n✓ Tarea "${titulo}" creada exitosamente (Estado: No completada)\n`);
 }
 
 // Función para filtrar tareas por estado
 async function filtrarPorEstado() {
-  console.log('\n--- FILTRAR TAREAS ---');
+  console.log('\n╔══════════════════════════════════╗');
+  console.log('║      FILTRAR TAREAS              ║');
+  console.log('╚══════════════════════════════════╝\n');
   
-  let estadoFiltro = await pregunta('¿Filtrar por tareas disponibles o no disponibles? (disponible/no disponible): ');
+  let filtro = await pregunta('¿Desea ver tareas completadas o no completadas? (completadas/no completadas): ');
   
-  let estadoBuscado;
-  if (estadoFiltro.toLowerCase() === 'disponible' || estadoFiltro.toLowerCase() === 'd') {
-    estadoBuscado = true;
-  } else if (estadoFiltro.toLowerCase() === 'no disponible' || estadoFiltro.toLowerCase() === 'n') {
-    estadoBuscado = false;
+  let completadaBuscada;
+  if (filtro.toLowerCase() === 'completadas' || filtro.toLowerCase() === 'c') {
+    completadaBuscada = true;
+  } else if (filtro.toLowerCase() === 'no completadas' || filtro.toLowerCase() === 'n') {
+    completadaBuscada = false;
   } else {
-    console.log('Opción no válida.\n');
+    console.log('\n✗ Opción no válida.\n');
     return;
   }
   
-  const tareasFiltradas = tareas.filter(tarea => tarea.estado === estadoBuscado);
+  const tareasFiltradas = tareas.filter(tarea => tarea.completada === completadaBuscada);
   
   if (tareasFiltradas.length === 0) {
-    console.log('\nNo hay tareas con ese estado.\n');
+    console.log(`\n✗ No hay tareas ${completadaBuscada ? 'completadas' : 'no completadas'}.\n`);
   } else {
-    console.log(`\n--- TAREAS (${estadoBuscado ? 'DISPONIBLES' : 'NO DISPONIBLES'}) ---`);
-    tareasFiltradas.forEach(tarea => {
-      console.log(`
-ID: ${tarea.id}
-Título: ${tarea.titulo}
-Descripción: ${tarea.descripcion}
-Estado: ${tarea.estado ? '✓ Disponible' : '✗ No disponible'}
-      `);
+    console.log(`\n╔══════════════════════════════════╗`);
+    console.log(`║  TAREAS ${completadaBuscada ? 'COMPLETADAS' : 'NO COMPLETADAS'.padEnd(19)} ║`);
+    console.log(`╚══════════════════════════════════╝\n`);
+    
+    tareasFiltradas.forEach((tarea, index) => {
+      console.log(`[${index + 1}] ID: ${tarea.id}`);
+      console.log(`    Título: ${tarea.titulo}`);
+      console.log(`    Descripción: ${tarea.descripcion}`);
+      console.log(`    Estado: ${tarea.completada ? '✓ Completada' : '✗ No completada'}\n`);
     });
   }
 }
@@ -80,25 +78,26 @@ Estado: ${tarea.estado ? '✓ Disponible' : '✗ No disponible'}
 // Función para mostrar todas las tareas
 function mostrarTodasLasTareas() {
   if (tareas.length === 0) {
-    console.log('\nNo hay tareas registradas.\n');
+    console.log('\n✗ No hay tareas registradas.\n');
   } else {
-    console.log('\n--- TODAS LAS TAREAS ---');
-    tareas.forEach(tarea => {
-      console.log(`
-ID: ${tarea.id}
-Título: ${tarea.titulo}
-Descripción: ${tarea.descripcion}
-Estado: ${tarea.estado ? '✓ Disponible' : '✗ No disponible'}
-      `);
+    console.log('\n╔══════════════════════════════════╗');
+    console.log('║      TODAS LAS TAREAS            ║');
+    console.log('╚══════════════════════════════════╝\n');
+    
+    tareas.forEach((tarea, index) => {
+      console.log(`[${index + 1}] ID: ${tarea.id}`);
+      console.log(`    Título: ${tarea.titulo}`);
+      console.log(`    Descripción: ${tarea.descripcion}`);
+      console.log(`    Estado: ${tarea.completada ? '✓ Completada' : '✗ No completada'}\n`);
     });
   }
 }
 
 // Función principal del menú
 async function menu() {
-  console.log('\n╔════════════════════════════════╗');
-  console.log('║   GESTOR DE TAREAS - CONSOLA   ║');
-  console.log('╚════════════════════════════════╝');
+  console.log('\n╔══════════════════════════════════╗');
+  console.log('║   GESTOR DE TAREAS - CONSOLA     ║');
+  console.log('╚══════════════════════════════════╝');
   console.log('\n¿Qué desea hacer?');
   console.log('1. Crear tarea');
   console.log('2. Filtrar tareas por estado');
@@ -129,10 +128,11 @@ async function menu() {
       break;
     
     default:
-      console.log('\nOpción no válida. Intente de nuevo.\n');
+      console.log('\n✗ Opción no válida. Intente de nuevo.\n');
       await menu();
   }
 }
 
 // Iniciar la aplicación
+console.log('\n');
 menu();
