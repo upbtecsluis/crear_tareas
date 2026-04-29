@@ -3,7 +3,7 @@ def gestionar_tareas():
 
     while True:
         print("\n--- GESTOR DE TAREAS ---")
-        print("1. Crear tarea")
+        print("1. Crear tareas")
         print("2. Filtrar tareas (Completadas/Pendientes)")
         print("3. Salir")
         
@@ -44,11 +44,10 @@ def gestionar_tareas():
                 print("No se encontraron tareas con ese estado.")
 
         elif opcion == "3":
-            print("Saliendo del programa... ¡Hasta luego!")
+            print("Saliendo del programa")
             break
         
         else:
             print("Opción no válida. Intente de nuevo.")
 
-# Ejecutar el programa
 gestionar_tareas()
