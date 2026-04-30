@@ -44,7 +44,7 @@ def gestionar_tareas():
                 print("No se encontraron tareas con ese estado.")
 
         elif opcion == "3":
-            print("Saliendo del programa")
+            print("Saliendos del programas")
             break
         
         else:
