@@ -48,6 +48,6 @@ def gestionar_tareas():
             break
         
         else:
-            print("Opción no válida. Intente de nuevo.")
+            print("Opción no válida. Intente de nuevos.")
 
 gestionar_tareas()
