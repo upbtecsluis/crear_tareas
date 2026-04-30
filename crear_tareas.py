@@ -6,7 +6,6 @@ def gestionar_tareas():
         print("1. Crear tareas")
         print("2. Filtrar tareas (Completadas/Pendientes)")
         print("3. Salir")
-        print("4. Salir del sistema")
         
         opcion = input("Seleccione una opción: ")
 
